@@ -37,7 +37,8 @@ def get_model_counts(tagged_models, tag):
     model_counts = []
     for model in tagged_models:
         model['count'] = model['query'](tag).count()
-        model_counts.append(model)
+        if model['count']:
+            model_counts.append(model)
                  
     return model_counts
     
