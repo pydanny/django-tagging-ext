@@ -1,0 +1,8 @@
+=======================================
+django-tagging-ext (Django Tagging EXT)
+=======================================
+
+`django-tagging`_ gives you a lot of useful capabilities but it doesn't provide you with attractive views or synonym handling. This addresses those issues and more.
+
+.. _`django-tagging`: http://code.google.com/p/django-tagging
+
