@@ -1,0 +1,25 @@
+{% extends "prettytaggy/base.html" %}
+
+{% block head_title %}All {{model }} listings for "{{ tag }}" {% endblock %}
+
+{% block body %}
+
+<h2>All {{model }} listings for <i>"{{ tag }}"</i></h2>
+
+<div id="prettytaggy-main">
+    
+    <div id="prettytaggy-sidebar">
+        {% include "prettytaggy/sidebar.html" %}
+    </div>
+    <div id="prettytaggy-content">
+        <ul>
+            {% for result in results %}
+                {% include content_template %}
+            {% endfor %}
+
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}

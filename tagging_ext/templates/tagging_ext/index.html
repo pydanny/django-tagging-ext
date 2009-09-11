@@ -1,0 +1,16 @@
+{% extends "prettytaggy/base.html" %}
+
+{% block head_title %}Tags{% endblock %}
+
+{% block body %}
+
+<h1>Tags</h1>
+
+<ul>
+    {% for tag in tags %}
+        <li><a href="{% url prettytaggy_tag tag.tag.name|slugify %}">{{ tag.tag.name }}</a> ( {{ tag.count }} )</li>
+    {% endfor %}
+
+</ul>
+
+{% endblock %}
