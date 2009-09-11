@@ -1,3 +1,3 @@
 {% for model in model_counts %}
-    <h2><a href="{% url tagging_ext_tag_by_model tag model.title %}">{{ model.title }}</a> ({{ model.count }})</h2>
+    <h2><a href="{% url tagging_ext_tag_by_model tag model.title|slugify %}">{{ model.title }}</a> ({{ model.count }})</h2>
 {% endfor %}

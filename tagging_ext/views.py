@@ -25,6 +25,7 @@ from django.db import connection
 from django.http import Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.template.defaultfilters import slugify
 
 from tagging.models import Tag # use these to check for tag content
 
@@ -109,10 +110,10 @@ def tag_by_model(request, tag, model, template_name="tagging_ext/tag_by_model.ht
     model_counts = get_model_counts(tagged_models, tag)
     
     results = None
-    for item in model_counts:             
+    for item in model_counts:
         
         # If the model being displayed is the same as what is being looped          
-        if model == item.get('title', ''):
+        if model == slugify(item.get('title', '')):
             
             # Fetch the lambda function which runs the ORM query
             query = item.get('query', None)
