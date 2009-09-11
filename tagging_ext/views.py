@@ -124,9 +124,11 @@ def tag_by_model(request, tag, model, template_name="tagging_ext/tag_by_model.ht
                 # get the results
                 results = query(tag)
                 
+                print stderr, results
+                
                 # And if there is a custom_template, use that.
                 # otherwise use the default template
-                content_template = item.get('custom_template',default_template)                
+                content_template = item.get('custom_template', default_template)                
                 break
     
     if not results:
