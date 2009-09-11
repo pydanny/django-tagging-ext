@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "blog.post", "fields": {"body": "I am a body", "status": 2, "allow_comments": true, "markup": null, "creator_ip": "127.0.0.1", "author": 1, "created_at": "2009-09-11 16:56:52", "tease": "I am a tease", "updated_at": "2009-09-11 18:22:43", "publish": "2009-09-11 16:56:52", "title": "Blog entry of doom", "slug": "entry-of-doom", "tags": "fun django"}}]
