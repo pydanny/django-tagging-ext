@@ -4,19 +4,19 @@
     tagged_models = (
         dict(title="Blog Posts", 
             query=lambda tag : TaggedItem.objects.get_by_model(Post, tag).filter(status=2),
-            custom_template="prettytaggy/default_template.html",
+            custom_template="tagging_ext/default_template.html",
         ),
     )
 
-    prettytaggy_kwargs = {
+    tagging_ext_kwargs = {
         'tagged_models':tagged_models,
         'default_template':'custom_templates/special.html'
 
     }
     
     urlpatterns += patterns('',
-        url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'prettytaggy.views.tag', kwargs=prettytaggy_kwargs, name='prettytaggy_tag'),
-        url(r'^tags/(?P<tag>.+)$', 'prettytaggy.views.index', kwargs=prettytaggy_kwargs, name='prettytaggy_index'),    
+        url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag', kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
+        url(r'^tags/(?P<tag>.+)$', 'tagging_ext.views.index', kwargs=tagging_ext_kwargs, name='tagging_ext_index'),    
     )    
 """
 
@@ -28,6 +28,8 @@ from django.template import RequestContext
 
 from tagging.models import Tag # use these to check for tag content
 
+from sys import stderr
+
 def get_model_counts(tagged_models, tag):
     """ This does a model count so the side bar looks nice.
     """
@@ -35,9 +37,10 @@ def get_model_counts(tagged_models, tag):
     for model in tagged_models:
         model['count'] = model['query'](tag).count()
         model_counts.append(model)
+                 
     return model_counts
     
-def index(request, template_name="prettytaggy/index.html", min_size=0,limit=10):
+def index(request, template_name="tagging_ext/index.html", min_size=0,limit=10):
     """
         min_size: Smallest size count accepted for a tag
         order_by: asc or desc by count
@@ -85,11 +88,11 @@ def index(request, template_name="prettytaggy/index.html", min_size=0,limit=10):
         context_instance=RequestContext(request))      
     
 
-def tag(request, tag='', template_name="prettytaggy/tag.html", tagged_models=(), default_template=None):
+def tag(request, tag='', template_name="tagging_ext/tag.html", tagged_models=(), default_template=None):
     
     # does the tag actually exist?
     tag = get_object_or_404(Tag, name=tag)
-        
+            
     dictionary = { 
         'tag': tag,
         'model_counts': get_model_counts(tagged_models,tag)
@@ -98,9 +101,7 @@ def tag(request, tag='', template_name="prettytaggy/tag.html", tagged_models=(),
     return render_to_response(template_name, dictionary,
         context_instance=RequestContext(request))      
 
-from sys import stderr
-
-def tag_by_model(request, tag, model, template_name="prettytaggy/tag_by_model.html", tagged_models=(),default_template='prettytaggy/default_template.html'):
+def tag_by_model(request, tag, model, template_name="tagging_ext/tag_by_model.html", tagged_models=(),default_template='tagging_app/default_template.html'):
 
     # does the tag actually exist?    
     tag = get_object_or_404(Tag, name=tag)    

@@ -1,4 +1,4 @@
-{% extends "prettytaggy/base.html" %}
+{% extends "tagging_ext/base.html" %}
 
 {% block head_title %}{{ tag }}{% endblock %}
 
@@ -6,10 +6,10 @@
 
 <h2>All listings for <i>"{{ tag }}"</i></h2>
 
-<div id="prettytaggy-main">
+<div id="tagging-ext-main">
     
-    <div id="prettytaggy-sidebar">
-        {% include "prettytaggy/sidebar.html" %}
+    <div id="tagging-ext-sidebar">
+        {% include "tagging_ext/sidebar.html" %}
     </div>
 
 </div>

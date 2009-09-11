@@ -1,4 +1,4 @@
-{% extends "prettytaggy/base.html" %}
+{% extends "tagging_ext/base.html" %}
 
 {% block head_title %}All {{model }} listings for "{{ tag }}" {% endblock %}
 
@@ -6,12 +6,12 @@
 
 <h2>All {{model }} listings for <i>"{{ tag }}"</i></h2>
 
-<div id="prettytaggy-main">
+<div id="tagging-ext-main">
     
-    <div id="prettytaggy-sidebar">
-        {% include "prettytaggy/sidebar.html" %}
+    <div id="tagging-ext-sidebar">
+        {% include "tagging_ext/sidebar.html" %}
     </div>
-    <div id="prettytaggy-content">
+    <div id="tagging-ext-content">
         <ul>
             {% for result in results %}
                 {% include content_template %}
