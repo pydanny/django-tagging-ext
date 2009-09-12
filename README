@@ -40,19 +40,18 @@ In the project url_conf (urls.py)::
     tagged_models = (
       dict(title="Blog Posts",
         query=lambda tag : TaggedItem.objects.get_by_model(Post, tag).filter(status=2),
-        custom_template="pinax_tagging_ext/blogs.html",
       ),
       dict(title="Bookmarks",
         query=lambda tag : TaggedItem.objects.get_by_model(BookmarkInstance, tag),
       ),
       dict(title="Photos",
         query=lambda tag: TaggedItem.objects.get_by_model(Image, tag).filter(safetylevel=1),
-        custom_template="pinax_tagging_ext/photos.html",    
       ),
     )
 
     tagging_ext_kwargs = {
       'tagged_models':tagged_models,
+      # You can add your own special template to be the default
       #'default_template':'custom_templates/special.html'
     }
 
@@ -61,6 +60,44 @@ In the project url_conf (urls.py)::
       url(r'^tags/(?P<tag>.+)/$', 'tagging_ext.views.tag', kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
       url(r'^tags/$', 'tagging_ext.views.index', name='tagging_ext_index'),  
     )
+    
+View rendering in Pinax via root url_conf
+==========================================
+
+In the pinax project url_conf (urls.py)::
+
+    # django-tagging-ext url definitions
+    from blog.models import Post
+    from bookmarks.models import BookmarkInstance
+    from photos.models import Image
+    from tagging.models import TaggedItem
+
+    tagged_models = (
+      dict(title="Blog Posts",
+        query=lambda tag : TaggedItem.objects.get_by_model(Post, tag).filter(status=2),
+        custom_template="pinax_tagging_ext/blogs.html", # built-in Pinax template
+      ),
+      dict(title="Bookmarks",
+        query=lambda tag : TaggedItem.objects.get_by_model(BookmarkInstance, tag),
+      ),
+      dict(title="Photos",
+        query=lambda tag: TaggedItem.objects.get_by_model(Image, tag).filter(safetylevel=1),
+        custom_template="pinax_tagging_ext/photos.html", # built-in Pinax template
+      ),
+    )
+
+    tagging_ext_kwargs = {
+      'tagged_models':tagged_models,
+      # You can add your own special template to be the default
+      #'default_template':'custom_templates/special.html'
+    }
+
+    urlpatterns += patterns('',
+      url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag_by_model', kwargs=tagging_ext_kwargs, name='tagging_ext_tag_by_model'),
+      url(r'^tags/(?P<tag>.+)/$', 'tagging_ext.views.tag', kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
+      url(r'^tags/$', 'tagging_ext.views.index', name='tagging_ext_index'),  
+    )
+
 
 .. _`django-tagging`: http://code.google.com/p/django-tagging
 .. _`Django`: http://djangoproject.com

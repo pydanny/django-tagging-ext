@@ -1,25 +1,11 @@
 """
-    Add this to your root urls_conf (urls.py)
+django-tagging-ext views.py
 
-    tagged_models = (
-        dict(title="Blog Posts", 
-            query=lambda tag : TaggedItem.objects.get_by_model(Post, tag).filter(status=2),
-            custom_template="tagging_ext/default_template.html",
-        ),
-    )
-
-    tagging_ext_kwargs = {
-        'tagged_models':tagged_models,
-        'default_template':'custom_templates/special.html'
-
-    }
-    
-    urlpatterns += patterns('',
-        url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag', kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
-        url(r'^tags/(?P<tag>.+)$', 'tagging_ext.views.index', kwargs=tagging_ext_kwargs, name='tagging_ext_index'),    
-    )    
 """
 
+from sys import stderr
+
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
 from django.http import Http404
@@ -28,8 +14,6 @@ from django.template import RequestContext
 from django.template.defaultfilters import slugify
 
 from tagging.models import Tag # use these to check for tag content
-
-from sys import stderr
 
 def get_model_counts(tagged_models, tag):
     """ This does a model count so the side bar looks nice.
@@ -41,6 +25,11 @@ def get_model_counts(tagged_models, tag):
             model_counts.append(model)
                  
     return model_counts
+    
+def check_results(results):
+    if not results:
+        raise Http404('No available items to display for this tag.')
+    
     
 def index(request, template_name="tagging_ext/index.html", min_size=0,limit=10):
     """
@@ -103,7 +92,10 @@ def tag(request, tag='', template_name="tagging_ext/tag.html", tagged_models=(),
     return render_to_response(template_name, dictionary,
         context_instance=RequestContext(request))      
 
-def tag_by_model(request, tag, model, template_name="tagging_ext/tag_by_model.html", tagged_models=(),default_template='tagging_app/default_template.html'):
+def tag_by_model(request, tag, model, 
+                    template_name="tagging_ext/tag_by_model.html", 
+                    tagged_models=(), 
+                    default_template='tagging_app/default_template.html'):
 
     # does the tag actually exist?    
     tag = get_object_or_404(Tag, name=tag)    
@@ -124,15 +116,16 @@ def tag_by_model(request, tag, model, template_name="tagging_ext/tag_by_model.ht
                 # get the results
                 results = query(tag)
                 
+                # Toss 404 if the results are empty
+                check_results(results)                
+                
                 # And if there is a custom_template, use that.
                 # otherwise use the default template
-                content_template = item.get('custom_template', default_template)                
+                content_template = item.get('custom_template', default_template)
                 break
     
-    if not results:
-        raise Http404('No available items to display for this tag.')
-        
-
+    # Toss 404 if the results are 0.
+    check_results(results)                        
     
     dictionary = { 
         'tag': tag,
