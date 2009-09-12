@@ -14,8 +14,20 @@ Optional Dependencies
 
 Pinax 0.7
 
-Psuedocode for view rendering
-=============================
+Installation
+~~~~~~~~~~~~
+
+Tagged release::
+
+    pip install django-tagging-est
+    
+Development version::
+
+    pip install -e git://github.com/pydanny/django-tagging-ext.git#egg=django-tagging-ext
+
+
+View rendering via root url_conf
+=================================
 
 In the project url_conf (urls.py)::
 
