@@ -2,8 +2,8 @@
 
 {% block extra_head %}
     {% if STATIC_URL %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}/django-tagging-ext.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}tagging_ext/django-tagging-ext.css" />
     {% else %}
-        <link rel="stylesheet" href="{{ MEDIA_URL }}/tagging_ext/django-tagging-ext.css" />    
+        <link rel="stylesheet" href="{{ MEDIA_URL }}tagging_ext/django-tagging-ext.css" />    
     {% endif %}
 {% endblock %}
