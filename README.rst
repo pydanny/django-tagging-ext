@@ -2,7 +2,10 @@
 django-tagging-ext (Django Tagging EXT)
 =======================================
 
-`django-tagging`_ gives you tagging. Django Tagging EXT gives you enhanced displays of tags and tag synonym capabilities. It is `Django`_ neutral but when combined with `Pinax`_ gives you some extra view capabilities based off some of the Pinax core applications.
+`django-tagging`_ gives you tagging. Django Tagging EXT gives you enhanced
+displays of tags and tag synonym capabilities. It is `Django`_ neutral but
+when combined with `Pinax`_ gives you some extra view capabilities based off
+some of the Pinax core applications.
 
 Dependencies
 ~~~~~~~~~~~~
@@ -56,8 +59,10 @@ In the project url_conf (urls.py)::
     }
 
     urlpatterns += patterns('',
-      url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag_by_model', kwargs=tagging_ext_kwargs, name='tagging_ext_tag_by_model'),
-      url(r'^tags/(?P<tag>.+)/$', 'tagging_ext.views.tag', kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
+      url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag_by_model', 
+            kwargs=tagging_ext_kwargs, name='tagging_ext_tag_by_model'),
+      url(r'^tags/(?P<tag>.+)/$', 'tagging_ext.views.tag', 
+            kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
       url(r'^tags/$', 'tagging_ext.views.index', name='tagging_ext_index'),  
     )
     
@@ -79,6 +84,7 @@ In the pinax project url_conf (urls.py)::
       ),
       dict(title="Bookmarks",
         query=lambda tag : TaggedItem.objects.get_by_model(BookmarkInstance, tag),
+        custom_template="pinax_tagging_ext/bookmarks.html",           
       ),
       dict(title="Photos",
         query=lambda tag: TaggedItem.objects.get_by_model(Image, tag).filter(safetylevel=1),
@@ -93,8 +99,10 @@ In the pinax project url_conf (urls.py)::
     }
 
     urlpatterns += patterns('',
-      url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag_by_model', kwargs=tagging_ext_kwargs, name='tagging_ext_tag_by_model'),
-      url(r'^tags/(?P<tag>.+)/$', 'tagging_ext.views.tag', kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
+      url(r'^tags/(?P<tag>.+)/(?P<model>.+)$', 'tagging_ext.views.tag_by_model',
+            kwargs=tagging_ext_kwargs, name='tagging_ext_tag_by_model'),
+      url(r'^tags/(?P<tag>.+)/$', 'tagging_ext.views.tag', 
+            kwargs=tagging_ext_kwargs, name='tagging_ext_tag'),
       url(r'^tags/$', 'tagging_ext.views.index', name='tagging_ext_index'),  
     )
 
