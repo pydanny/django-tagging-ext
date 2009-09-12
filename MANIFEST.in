@@ -3,5 +3,9 @@ include INSTALL.txt
 include LICENSE.txt
 include MANIFEST.in
 include README
-recursive-include docs *.txt
+recursive-include docs *
+recursive-include tagging_ext/fixtures *.json
+recursive-include tagging_ext/media/tagging_ext *.css
+recursive-include tagging_ext/templates/pinax *.html
+recursive-include tagging_ext/templates/pinax_tagging_ext *.html
 recursive-include tagging_ext/templates/tagging_ext *.html
