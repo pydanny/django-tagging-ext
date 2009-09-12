@@ -1,4 +1,4 @@
-""" Here for backwards compatability with Pinax's old tag_app """
+""" Here for backwards compatability with Pinax's tag_app """
 
 from django.template import Library
 from django.conf import settings
@@ -7,11 +7,17 @@ register = Library()
 
 @register.inclusion_tag("pinax_legacy/tag_list.html")
 def show_tags_for(obj):
-    return {
+    
+    response = {
         "obj": obj,
         "MEDIA_URL": settings.MEDIA_URL,
-        "STATIC_URL": settings.STATIC_URL,
     }
+    
+    # Support for static media if supported
+    if hasattr(setting, "STATIC_URL"):
+        response['STATIC_URL'] = settings.STATIC_URL
+    
+    return response
 
 @register.inclusion_tag("pinax_legacy/tag_count_list.html")
 def show_tag_counts(tag_counts):
