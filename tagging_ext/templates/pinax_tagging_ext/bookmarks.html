@@ -1,0 +1,8 @@
+{% load avatar_tags %}
+{% load extra_tagging_tags %}
+
+
+<h2><a href="{{ result.bookmark.url }}">{{ result.bookmark.description }}</a></h2>
+<div class="url">{% if result.bookmark.get_favicon_url %}<img src="{{ result.bookmark.get_favicon_url }}" width="16" height="16" /> {% endif %}{{ result.bookmark.url }}</div>
+<div class="body">{{ result.bookmark.note|linebreaks }}</div>
+<div class="tags">{% show_tag_counts result.bookmark.all_tags_with_counts %}</div>

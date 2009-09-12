@@ -1,0 +1,7 @@
+{% load blog_tags %}
+{% load i18n %}
+
+<p>{% trans "These are blog posts from everyone:" %}</p>
+{% for result in results %}
+    {% show_blog_post result %}
+{% endfor %}
