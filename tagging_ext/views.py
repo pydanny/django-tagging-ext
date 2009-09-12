@@ -95,7 +95,7 @@ def tag(request, tag='', template_name="tagging_ext/tag.html", tagged_models=(),
 def tag_by_model(request, tag, model, 
                     template_name="tagging_ext/tag_by_model.html", 
                     tagged_models=(), 
-                    default_template='tagging_app/default_template.html'):
+                    default_content_template='tagging_app/default_template.html'):
 
     # does the tag actually exist?    
     tag = get_object_or_404(Tag, name=tag)    
@@ -121,7 +121,7 @@ def tag_by_model(request, tag, model,
                 
                 # And if there is a custom_template, use that.
                 # otherwise use the default template
-                content_template = item.get('custom_template', default_template)
+                content_template = item.get('content_template', default_content_template)
                 break
     
     # Toss 404 if the results are 0.

@@ -3,9 +3,15 @@ django-tagging-ext (Django Tagging EXT)
 =======================================
 
 `django-tagging`_ gives you tagging. Django Tagging EXT gives you enhanced
-displays of tags and tag synonym capabilities. It is `Django`_ neutral but
-when combined with `Pinax`_ gives you some extra view capabilities based off
-some of the Pinax core applications.
+displays of tags. It is `Django`_ neutral but when combined with `Pinax`_ 
+gives you some extra view capabilities based off some of the Pinax core 
+applications.
+
+Future releases of Django Tagging EXT will include these features:
+
+ * Tag synonyms (blog can be related to blogs)
+ * More comprehensive tests
+ * Tag dispatching so you can control tagging more tightly. For example, limiting tags to just one model.
 
 Dependencies
 ~~~~~~~~~~~~
@@ -27,7 +33,14 @@ Tagged release::
 Development version::
 
     pip install -e git://github.com/pydanny/django-tagging-ext.git#egg=django-tagging-ext
+    
+Add to your Django settings.py file::
 
+    INSTALLED_APPS = (
+        ...
+        'tagging_ext',
+    )
+    
 
 View rendering via root url_conf
 =================================
@@ -69,7 +82,9 @@ In the project url_conf (urls.py)::
 View rendering in Pinax via root url_conf
 ==========================================
 
-In the pinax project url_conf (urls.py)::
+In the pinax project url_conf (urls.py) we use the custom_template field to 
+explicitly tell Django Tagging EXT to fetch views customized for use in 
+Pinax::
 
     # django-tagging-ext url definitions
     from blog.models import Post
@@ -80,15 +95,15 @@ In the pinax project url_conf (urls.py)::
     tagged_models = (
       dict(title="Blog Posts",
         query=lambda tag : TaggedItem.objects.get_by_model(Post, tag).filter(status=2),
-        custom_template="pinax_tagging_ext/blogs.html", # built-in Pinax template
+        content_template="pinax_tagging_ext/blogs.html",
       ),
       dict(title="Bookmarks",
         query=lambda tag : TaggedItem.objects.get_by_model(BookmarkInstance, tag),
-        custom_template="pinax_tagging_ext/bookmarks.html",           
+        content_template="pinax_tagging_ext/bookmarks.html",        
       ),
       dict(title="Photos",
         query=lambda tag: TaggedItem.objects.get_by_model(Image, tag).filter(safetylevel=1),
-        custom_template="pinax_tagging_ext/photos.html", # built-in Pinax template
+        content_template="pinax_tagging_ext/photos.html",    
       ),
     )
 
