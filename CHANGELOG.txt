@@ -1,3 +1,8 @@
+0.2.0 10/22/2010
+---------------
+
+ * Fixing some minor issues with templates
+
 0.1.0 9/12/2009
 ---------------
 
