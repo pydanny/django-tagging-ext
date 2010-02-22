@@ -95,7 +95,7 @@ def tag(request, tag='', template_name="tagging_ext/tag.html", tagged_models=(),
 def tag_by_model(request, tag, model, 
                     template_name="tagging_ext/tag_by_model.html", 
                     tagged_models=(), 
-                    default_content_template='tagging_app/default_template.html'):
+                    default_content_template='tagging_ext/default_template.html'):
 
     # does the tag actually exist?    
     tag = get_object_or_404(Tag, name=tag)    
