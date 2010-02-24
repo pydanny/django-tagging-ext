@@ -1,3 +1,11 @@
+0.3.0 10/24/2010
+----------------
+
+ * Added tagging autocomplete
+ * Changed templates to not call code that only exists in Pinax. 
+ * Removed extra_tagging_tags and put those elements in tagging_ext_tags
+
+
 0.2.0 10/22/2010
 ---------------
 
