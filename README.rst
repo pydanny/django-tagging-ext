@@ -2,17 +2,17 @@
 django-tagging-ext (Django Tagging EXT)
 =======================================
 
-`django-tagging`_ gives you tagging. Django Tagging EXT gives you enhanced
-displays of tags. It is `Django`_ neutral but when combined with `Pinax`_ 
-gives you some extra view capabilities based off some of the Pinax core 
-applications.
+`django-tagging`_ gives you tagging. django-tagging-ext gives you enhanced 
+displays of tags. All rendered HTML is done via templates so you can customize
+the displays as needed.
 
 Future releases of Django Tagging EXT will include these features:
 
- * Tag synonyms (blog can be related to blogs)
  * More comprehensive tests
  * Tag dispatching so you can control tagging more tightly. For example, limiting tags to just one model.
  * Sphinx based docs folder
+ * Tag Auto-complete
+ * Integration with Pinax style tasks
 
 Dependencies
 ~~~~~~~~~~~~
@@ -22,7 +22,8 @@ django-tagging
 Optional Dependencies
 ~~~~~~~~~~~~~~~~~~~~~
 
-Pinax 0.7
+Pinax 0.7.x
+Pinax 0.9
 
 Installation
 ~~~~~~~~~~~~
@@ -33,7 +34,7 @@ Tagged release::
     
 Development version::
 
-    pip install -e git://github.com/pydanny/django-tagging-ext.git#egg=django-tagging-ext
+    pip install -e git+git://github.com/pydanny/django-tagging-ext.git#egg=django-tagging-ext
     
 Add to your Django settings.py file::
 
@@ -45,6 +46,8 @@ Add to your Django settings.py file::
 
 View rendering via root url_conf
 =================================
+
+django-tagging-ext is designed so all the work is done in the root urls file.
 
 In the project url_conf (urls.py)::
 
@@ -80,8 +83,8 @@ In the project url_conf (urls.py)::
       url(r'^tags/$', 'tagging_ext.views.index', name='tagging_ext_index'),  
     )
     
-View rendering in Pinax via root url_conf
-==========================================
+View rendering of Pinax objects via root url_conf
+==================================================
 
 In the pinax project url_conf (urls.py) we use the custom_template field to 
 explicitly tell Django Tagging EXT to fetch views customized for use in 

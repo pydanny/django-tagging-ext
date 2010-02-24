@@ -1,12 +1,10 @@
 {% load threadedcommentstags %}
 
-
-
-    <div class="gallery-photo-thumb">
-        <a href="/photos/details/{{ result.id }}/"><img src="{{ result.get_thumbnail_url }}" alt="{{ result.title }}"/></a><br />
-        from <a href="{% url profile_detail result.member.username %}">{{ result.member.username }}</a><br />
-        <img src="{{ MEDIA_URL }}pinax/images/silk/icons/comment.png" border="0" class="noborder" align="absmiddle" /><a href="/photos/details/{{ result.id }}/">{% get_comment_count for result as commentcount %} {{ commentcount }} Comments</a>
-        <br />
-        Viewed {{ result.view_count }} Times
-    </div>
+<div class="gallery-photo-thumb">
+    <a href="/photos/details/{{ result.id }}/"><img src="{{ result.get_thumbnail_url }}" alt="{{ result.title }}"/></a><br />
+    from <a href="{% url profile_detail result.member.username %}">{{ result.member.username }}</a><br />
+    <img src="{{ MEDIA_URL }}pinax/images/silk/icons/comment.png" border="0" class="noborder" align="absmiddle" /><a href="/photos/details/{{ result.id }}/">{% get_comment_count for result as commentcount %} {{ commentcount }} Comments</a>
+    <br />
+    Viewed {{ result.view_count }} Times
+</div>
 
