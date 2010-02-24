@@ -8,10 +8,13 @@ from sys import stderr
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
-from django.http import Http404
+from django.db.models import get_model
+from django.http import Http404, HttpResponse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.defaultfilters import slugify
+
+from django.contrib.contenttypes.models import ContentType
 
 from tagging.models import Tag # use these to check for tag content
 
@@ -90,15 +93,15 @@ def tag(request, tag='', template_name="tagging_ext/tag.html", tagged_models=(),
     }
     
     return render_to_response(template_name, dictionary,
-        context_instance=RequestContext(request))      
+        context_instance=RequestContext(request))
 
-def tag_by_model(request, tag, model, 
-                    template_name="tagging_ext/tag_by_model.html", 
-                    tagged_models=(), 
+def tag_by_model(request, tag, model,
+                    template_name="tagging_ext/tag_by_model.html",
+                    tagged_models=(),
                     default_content_template='tagging_ext/default_template.html'):
 
-    # does the tag actually exist?    
-    tag = get_object_or_404(Tag, name=tag)    
+    # does the tag actually exist?
+    tag = get_object_or_404(Tag, name=tag)
     
     model_counts = get_model_counts(tagged_models, tag)
     
@@ -136,4 +139,63 @@ def tag_by_model(request, tag, model,
     }
     
     return render_to_response(template_name, dictionary,
-        context_instance=RequestContext(request))      
+        context_instance=RequestContext(request))
+
+def autocomplete(request, app_label=None, model=None):
+    """returns ``\\n`` delimited strings in the form <tag>||(#)
+
+    GET params are ``q``, ``limit``, ``counts``, ``q`` is what the user
+    has typed, ``limit`` defaults to 10, and ``counts`` can be "model", "all"
+    or, if absent, will default to all - ie a site-wide count.
+    """
+
+    # get the relevent model if applicable
+    if app_label and model:
+        try:
+            model = ContentType.objects.get(app_label=app_label, model=model)
+        except:
+            raise Http404
+    else:
+        model = None
+    
+    if not request.GET.has_key("q"):
+        raise Http404
+    else:
+        q = request.GET["q"]
+    
+    # counts can be 'all', 'model' or 'None'
+    counts = request.GET.get("counts", "all")
+    limit = request.GET.get("limit", 10)
+    
+    if model:
+        tags = Tag.objects.filter(
+            items__content_type = model,
+            name__istartswith = q
+        ).distinct()[:limit]
+    else:
+        tags = Tag.objects.filter(
+            name__istartswith = q
+        ).distinct()[:limit]
+
+    if counts == "all":
+        l = sorted(list(tags),
+            lambda x, y: cmp(y.items.all().count(), x.items.all().count())
+        )
+        tag_list = "\n".join([ '%s||(%s)' % (tag.name, tag.items.all().count() ) for tag in l if tag])
+
+    elif counts == "model":
+        if model:
+            l = sorted(list(tags),
+                lambda x, y:
+                    cmp(y.items.filter(content_type=model).count(), x.items.filter(content_type=model).count())
+            )
+            tag_list = "\n".join(
+                ["%s||(%s)" % (tag.name, tag.items.filter(content_type=model).count()) for tag in l if tag]
+            )
+        else:
+            raise Exception(
+                'You asked for a model with GET but did not pass one to the url'
+            )
+    else:
+        tag_list = "\n".join([tag.name for tag in tags if tag])
+    return HttpResponse(tag_list)
