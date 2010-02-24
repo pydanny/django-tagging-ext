@@ -2,9 +2,9 @@
 $(function() {
     jQuery("#id_tags").autocomplete(
     {% if app_label and model %}
-        '{% url tagging_utils_autocomplete app_label=app_label model=model %}{% if counts %}?counts={{counts}}{% endif %}',
+        '{% url tagging_ext_autocomplete app_label=app_label model=model %}{% if counts %}?counts={{counts}}{% endif %}',
     {% else %}
-        '{% url tagging_utils_autocomplete %}{% if counts %}?counts={{counts}}{% endif %}',
+        '{% url tagging_ext_autocomplete %}{% if counts %}?counts={{counts}}{% endif %}',
     {% endif %}
 {
 	    max: 10,

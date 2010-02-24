@@ -46,7 +46,7 @@ class TagAutoCompleteInput(forms.TextInput):
                 });
             </script>""" % (
                 name,
-                reverse("tagging_utils_autocomplete", kwargs={
+                reverse("tagging_ext_autocomplete", kwargs={
                     "app_label": self.app_label,
                     "model": self.model
                 })

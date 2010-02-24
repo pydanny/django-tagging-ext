@@ -8,7 +8,7 @@ register = template.Library()
 def tag_autocomplete_js(format_string=None):
     """format_string should be ``app_label model counts``
     
-    renders 'tagging_utils/tag_autocomplete_js.html"""
+    renders 'tagging_ext/tag_autocomplete_js.html"""
     if format_string:
         context_list = format_string.split(' ')
         context = {
@@ -16,5 +16,5 @@ def tag_autocomplete_js(format_string=None):
         }
     else:
         context = {}
-    return render_to_string('tagging_utils/tagging_autocomplete_js.html', context)
+    return render_to_string('tagging_ext/tagging_autocomplete_js.html', context)
 
