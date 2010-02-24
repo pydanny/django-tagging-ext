@@ -23,7 +23,7 @@ Optional Dependencies
 ~~~~~~~~~~~~~~~~~~~~~
 
 Pinax 0.7.x
-Pinax 0.9
+Pinax 0.9+
 
 Installation
 ~~~~~~~~~~~~
