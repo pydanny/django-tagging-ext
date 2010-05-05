@@ -18,11 +18,15 @@ class TagAutoCompleteInput(forms.TextInput):
             settings.STATIC_URL + "pinax/js/jquery.autocomplete.min.js"
         )
     
-    def __init__(self, app_label, model, *args, **kwargs):
-        self.app_label = app_label
-        self.model = model
-        super(TagAutoCompleteInput, self).__init__(*args, **kwargs)
-    
+    def init(self, *args, **kwargs):
+        if len(args) == 4:
+            self.app_label = args[0]
+            self.model = args[1]
+            args = args[2:]
+            super(TagAutoCompleteInput, self).__init__(*args, **kwargs)
+        else:
+            super(TagAutoCompleteInput, self).__init__(*args, **kwargs)
+
     def render(self, name, value, attrs=None):
         output = super(TagAutoCompleteInput, self).render(name, value, attrs)
         
@@ -48,7 +52,8 @@ class TagAutoCompleteInput(forms.TextInput):
                 name,
                 reverse("tagging_ext_autocomplete", kwargs={
                     "app_label": self.app_label,
-                    "model": self.model
-                })
+                    "model": self.model }
+                        if 'app_label' in self.__dict__ else {}
+                )
             )
         )
