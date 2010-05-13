@@ -8,14 +8,19 @@ from django.utils.safestring import mark_safe
 class TagAutoCompleteInput(forms.TextInput):
     
     class Media:
+        if hasattr(settings, 'STATIC_URL'):
+            media_url = settings.STATIC_URL
+        else:
+            media_url = settings.MEDIA_URL
+
         css = {
-            "all": (settings.STATIC_URL + "pinax/css/jquery.autocomplete.css",)
+            "all": (media_url + "pinax/css/jquery.autocomplete.css",)
         }
         js = (
-            settings.STATIC_URL + "pinax/js/jquery-1.3.2.min.js",
-            settings.STATIC_URL + "pinax/js/jquery.bgiframe.min.js",
-            settings.STATIC_URL + "pinax/js/jquery.ajaxQueue.js",
-            settings.STATIC_URL + "pinax/js/jquery.autocomplete.min.js"
+            media_url + "pinax/js/jquery-1.3.2.min.js",
+            media_url + "pinax/js/jquery.bgiframe.min.js",
+            media_url + "pinax/js/jquery.ajaxQueue.js",
+            media_url + "pinax/js/jquery.autocomplete.min.js"
         )
     
     def init(self, *args, **kwargs):
