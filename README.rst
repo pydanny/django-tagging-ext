@@ -30,7 +30,7 @@ Installation
 
 Tagged release::
 
-    pip install django-tagging-est
+    pip install django-tagging-ext
     
 Development version::
 
