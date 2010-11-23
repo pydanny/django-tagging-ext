@@ -50,10 +50,10 @@ def index(request, template_name="tagging_ext/index.html", min_size=0,limit=10):
         HAVING COUNT(tag_item.tag_id) > %s
         ORDER BY counter desc
         LIMIT %s
-    """  % (min_size, limit)
+    """
 
     cursor = connection.cursor()
-    cursor.execute(query)
+    cursor.execute(query, [min_size, limit])
     
     results = []
     
