@@ -126,8 +126,18 @@ Pinax::
     )
 
 
+Running tests from with you Pinax project
+=========================================
+
+ $ pinax-admin setup_project -b social my_pinax_project
+ $ cd my_pinax_project
+ $ python manage.py test tagging_ext
+
+
 .. _`django-tagging`: http://code.google.com/p/django-tagging
 .. _`Django`: http://djangoproject.com
 .. _`Pinax`: http://pinaxproject.com
+
+
 
 
