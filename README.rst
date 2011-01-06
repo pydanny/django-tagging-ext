@@ -126,8 +126,8 @@ Pinax::
     )
 
 
-Running tests from with you Pinax project
-=========================================
+Running tests from within your Pinax project
+============================================
 
  $ pinax-admin setup_project -b social my_pinax_project
  $ cd my_pinax_project
