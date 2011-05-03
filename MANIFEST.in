@@ -2,7 +2,7 @@ include CHANGELOG.txt
 include INSTALL.txt
 include LICENSE.txt
 include MANIFEST.in
-include README
+include README.rst
 recursive-include docs *
 recursive-include tagging_ext/fixtures *.json
 recursive-include tagging_ext/media/tagging_ext *.css

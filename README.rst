@@ -10,9 +10,7 @@ Future releases of Django Tagging EXT will include these features:
 
  * More comprehensive tests
  * Tag dispatching so you can control tagging more tightly. For example, limiting tags to just one model.
- * Sphinx based docs folder
  * Tag Auto-complete
- * Integration with Pinax style tasks
 
 Dependencies
 ~~~~~~~~~~~~

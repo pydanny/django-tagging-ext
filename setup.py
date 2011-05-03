@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '0.3.1'
+version = '0.3.2'
 
 setup(
     name='django-tagging-ext',
@@ -21,7 +21,7 @@ setup(
     keywords='django,pinax',
     author='Daniel Greenfeld',
     author_email='pydanny@gmail.com',
-    url='http://github.com/pydanny/django-tagging-ext/tree/master',
+    url='http://github.com/pydanny/django-tagging-ext',
     license='MIT',
     packages=find_packages(),
 )
