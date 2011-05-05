@@ -24,4 +24,5 @@ setup(
     url='http://github.com/pydanny/django-tagging-ext',
     license='MIT',
     packages=find_packages(),
+    include_package_data=True,
 )
